@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: partner-dashboard-site-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: partner-dashboard-site
+  template:
+    metadata:
+      labels:
+        app: partner-dashboard-site
+    spec:
+      containers:
+      - name: partner-dashboard-site
+        image: testwincontainers.azurecr.io/umlaplatformpartner-dashboard-site
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: partner-dashboard-site-srv
+spec:
+  selector:
+    app: partner-dashboard-site
+  ports:
+  - name: partner-dashboard-site
+    protocol: TCP
+    port: 3100
+    targetPort: 3100
